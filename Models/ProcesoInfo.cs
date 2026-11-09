@@ -12,13 +12,28 @@ namespace MahApps.Metro.Models
         Iniciado,
         Detenido
     }
-    public class SubProcesoItem
+    public class SubProcesoItem : ObservableObject
     {
-        public string ProcessId { get; set; } = string.Empty;
-        public string ParentId { get; set; } = string.Empty;
-        public string TipoProceso { get; set; } = string.Empty;
+        public string ProcessId { get; set; } = "";
+        public string ParentId { get; set; } = "";
+        public string TipoProceso { get; set; } = "";
         public DateTime HoraEvento { get; set; }
         public EstadoProceso Estado { get; set; }
+
+        private bool _notificacionesHabilitadas = true;
+
+        public bool NotificacionesHabilitadas
+        {
+            get => _notificacionesHabilitadas;
+            set
+            {
+                if (_notificacionesHabilitadas != value)
+                {
+                    _notificacionesHabilitadas = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
     }
     public class ProcesoAgrupado : ObservableObject
     {

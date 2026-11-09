@@ -6,112 +6,328 @@
         xmlns:vm="clr-namespace:MahApps.Metro.ViewModels"
         xmlns:models="clr-namespace:MahApps.Metro.Models"
         mc:Ignorable="d"
-        Title="Monitor de procesos WMI" Height="500" Width="850"
+        Title="Monitor de procesos WMI"
+        Height="500"
+        Width="850"
         Background="#F5F5F7">
 
+    <!-- ViewModel -->
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
 
+    <!-- Recursos visuales -->
+    <Window.Resources>
+
+        <!-- Interruptor estilo Android -->
+        <Style x:Key="AndroidSwitch"
+               TargetType="{x:Type CheckBox}">
+
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="#E5E7EB"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <Grid Width="42" Height="24">
+
+                                <Border x:Name="Track"
+                                        CornerRadius="12"
+                                        Background="#555555"/>
+
+                                <Ellipse x:Name="Thumb"
+                                         Width="18"
+                                         Height="18"
+                                         Fill="White"
+                                         HorizontalAlignment="Left"
+                                         Margin="3"/>
+
+                            </Grid>
+
+                            <ContentPresenter ContentSource="Content"
+                                              Margin="10,0,0,0"
+                                              VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked" Value="True">
+
+                                <Setter TargetName="Track"
+                                        Property="Background"
+                                        Value="#81C784"/>
+
+                                <Setter TargetName="Thumb"
+                                        Property="HorizontalAlignment"
+                                        Value="Right"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+
+                                <Setter Property="Opacity"
+                                        Value="0.5"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+    </Window.Resources>
+
     <Grid Margin="10">
+
         <TabControl>
-            <!-- Pestaña 1: Monitor en vivo agrupado -->
-            <TabItem Header=" Monitor en vivo">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10">
+
+            <!-- Pestaña 1: Monitor en vivo -->
+            <TabItem Header="Monitor en vivo">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              Margin="10">
+
                     <StackPanel>
+
                         <TextBlock Text="Estado actual de procesos monitorizados"
-                       FontSize="16" FontWeight="Bold" Foreground="#333" Margin="0,0,0,15"/>
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="#333"
+                                   Margin="0,0,0,15"/>
 
-                        <!-- Lista basada en los procesos padre fijos -->
+                        <!-- Procesos padre -->
                         <ItemsControl ItemsSource="{Binding ProcesosPadre}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <!-- Contenedor principal del proceso padre -->
-                                    <Border x:Name="CardBorder" Background="White" CornerRadius="8" Margin="0,0,0,10" Padding="12" 
-                                BorderBrush="#E0E0E0" BorderThickness="1.5">
 
-                                        <!-- Expander nativo que hace funcionar el despliegue -->
+                            <ItemsControl.ItemTemplate>
+
+                                <DataTemplate>
+
+                                    <Border x:Name="CardBorder"
+                                            Background="White"
+                                            CornerRadius="8"
+                                            Margin="0,0,0,10"
+                                            Padding="12"
+                                            BorderBrush="#E0E0E0"
+                                            BorderThickness="1.5">
+
                                         <Expander x:Name="ProcessExpander">
+
                                             <Expander.Header>
+
                                                 <Grid Width="730">
+
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="110"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <!-- Badge de Estado del Padre -->
-                                                    <Border x:Name="StatusBadge" CornerRadius="12" Padding="8,4" HorizontalAlignment="Left">
-                                                        <TextBlock Text="{Binding EstadoGeneral}" Foreground="White" FontWeight="Bold" FontSize="11" HorizontalAlignment="Center"/>
+                                                    <!-- Estado del proceso padre -->
+                                                    <Border x:Name="StatusBadge"
+                                                            CornerRadius="12"
+                                                            Padding="8,4"
+                                                            HorizontalAlignment="Left">
+
+                                                        <TextBlock Text="{Binding EstadoGeneral}"
+                                                                   Foreground="White"
+                                                                   FontWeight="Bold"
+                                                                   FontSize="11"
+                                                                   HorizontalAlignment="Center"/>
+
                                                     </Border>
 
-                                                    <!-- Nombre del Proceso y contador -->
-                                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0">
-                                                        <TextBlock Text="{Binding Nombre}" FontWeight="Bold" FontSize="14" Foreground="#2C3E50"/>
-                                                        <TextBlock Text=" (Activos: " Foreground="Gray" FontSize="12" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                                        <TextBlock Text="{Binding CantidadActivos}" Foreground="Gray" FontSize="12" VerticalAlignment="Center" FontWeight="Bold"/>
-                                                        <TextBlock Text=")" Foreground="Gray" FontSize="12" VerticalAlignment="Center"/>
+                                                    <!-- Nombre y contador -->
+                                                    <StackPanel Grid.Column="1"
+                                                                Orientation="Horizontal"
+                                                                VerticalAlignment="Center"
+                                                                Margin="15,0,0,0">
+
+                                                        <TextBlock Text="{Binding Nombre}"
+                                                                   FontWeight="Bold"
+                                                                   FontSize="14"
+                                                                   Foreground="#2C3E50"/>
+
+                                                        <TextBlock Text=" (Activos: "
+                                                                   Foreground="Gray"
+                                                                   FontSize="12"
+                                                                   VerticalAlignment="Center"
+                                                                   Margin="10,0,0,0"/>
+
+                                                        <TextBlock Text="{Binding CantidadActivos}"
+                                                                   Foreground="Gray"
+                                                                   FontSize="12"
+                                                                   VerticalAlignment="Center"
+                                                                   FontWeight="Bold"/>
+
+                                                        <TextBlock Text=")"
+                                                                   Foreground="Gray"
+                                                                   FontSize="12"
+                                                                   VerticalAlignment="Center"/>
+
                                                     </StackPanel>
+
                                                 </Grid>
+
                                             </Expander.Header>
 
-                                            <!-- Contenido Desplegable: Lista de Subprocesos activos -->
+                                            <!-- Instancias y subprocesos -->
                                             <StackPanel Margin="0,15,0,5">
-                                                <Separator Background="#E0E0E0" Margin="0,0,0,10"/>
 
-                                                <TextBlock Text="Instancias y Subprocesos Activos:" FontSize="12" FontWeight="SemiBold" Foreground="#555" Margin="0,0,0,5"/>
+                                                <Separator Background="#E0E0E0"
+                                                           Margin="0,0,0,10"/>
 
-                                                <!-- Sub-lista con los subprocesos de este padre -->
+                                                <TextBlock Text="Instancias y Subprocesos Activos:"
+                                                           FontSize="12"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="#555"
+                                                           Margin="0,0,0,5"/>
+
                                                 <ItemsControl ItemsSource="{Binding SubProcesos}">
+
                                                     <ItemsControl.ItemTemplate>
+
                                                         <DataTemplate>
-                                                            <Border Background="#F9F9FB" CornerRadius="6" Padding="8" Margin="0,0,0,5" BorderBrush="#EFEFEF" BorderThickness="1">
+
+                                                            <Border Background="#F9F9FB"
+                                                                    CornerRadius="6"
+                                                                    Padding="8"
+                                                                    Margin="0,0,0,5"
+                                                                    BorderBrush="#EFEFEF"
+                                                                    BorderThickness="1">
+
                                                                 <Grid>
+
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="80"/>
                                                                         <ColumnDefinition Width="80"/>
                                                                         <ColumnDefinition Width="80"/>
                                                                         <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="Auto"/>
                                                                     </Grid.ColumnDefinitions>
 
-                                                                    <TextBlock Text="{Binding HoraEvento, StringFormat={}{0:HH:mm:ss}}" Foreground="Gray" FontSize="11" VerticalAlignment="Center"/>
-                                                                    <TextBlock Grid.Column="1" Text="{Binding ProcessId}" FontWeight="SemiBold" FontSize="11" VerticalAlignment="Center"/>
-                                                                    <TextBlock Grid.Column="2" Text="{Binding ParentId}" Foreground="Gray" FontSize="11" VerticalAlignment="Center"/>
-                                                                    <TextBlock Grid.Column="3" Text="{Binding TipoProceso}" FontSize="11" Foreground="#333" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                                    <!-- Hora -->
+                                                                    <TextBlock Text="{Binding HoraEvento, StringFormat={}{0:HH:mm:ss}}"
+                                                                               Foreground="Gray"
+                                                                               FontSize="11"
+                                                                               VerticalAlignment="Center"/>
+
+                                                                    <!-- PID -->
+                                                                    <TextBlock Grid.Column="1"
+                                                                               Text="{Binding ProcessId}"
+                                                                               FontWeight="SemiBold"
+                                                                               FontSize="11"
+                                                                               VerticalAlignment="Center"/>
+
+                                                                    <!-- Parent PID -->
+                                                                    <TextBlock Grid.Column="2"
+                                                                               Text="{Binding ParentId}"
+                                                                               Foreground="Gray"
+                                                                               FontSize="11"
+                                                                               VerticalAlignment="Center"/>
+
+                                                                    <!-- Tipo -->
+                                                                    <TextBlock Grid.Column="3"
+                                                                               Text="{Binding TipoProceso}"
+                                                                               FontSize="11"
+                                                                               Foreground="#333"
+                                                                               VerticalAlignment="Center"
+                                                                               TextTrimming="CharacterEllipsis"/>
+
+                                                                    <!-- Interruptor de notificaciones -->
+                                                                    <CheckBox Grid.Column="4"
+                                                                              Content="Correo"
+                                                                              Style="{StaticResource AndroidSwitch}"
+                                                                              IsChecked="{Binding NotificacionesHabilitadas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                              Margin="10,0,0,0"
+                                                                              ToolTip="Activa o desactiva las notificaciones por correo para esta instancia."/>
+
                                                                 </Grid>
+
                                                             </Border>
+
                                                         </DataTemplate>
+
                                                     </ItemsControl.ItemTemplate>
+
                                                 </ItemsControl>
+
                                             </StackPanel>
+
                                         </Expander>
+
                                     </Border>
 
-                                    <!-- Triggers visuales globales para la tarjeta y el badge según el estado del padre -->
+                                    <!-- Colores según el estado -->
                                     <DataTemplate.Triggers>
-                                        <DataTrigger Binding="{Binding EstadoGeneral}" Value="{x:Static models:EstadoProceso.Iniciado}">
-                                            <Setter TargetName="StatusBadge" Property="Background" Value="#2ECC71"/>
-                                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#2ECC71"/>
+
+                                        <DataTrigger Binding="{Binding EstadoGeneral}"
+                                                     Value="{x:Static models:EstadoProceso.Iniciado}">
+
+                                            <Setter TargetName="StatusBadge"
+                                                    Property="Background"
+                                                    Value="#2ECC71"/>
+
+                                            <Setter TargetName="CardBorder"
+                                                    Property="BorderBrush"
+                                                    Value="#2ECC71"/>
+
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding EstadoGeneral}" Value="{x:Static models:EstadoProceso.Detenido}">
-                                            <Setter TargetName="StatusBadge" Property="Background" Value="#E74C3C"/>
-                                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#E74C3C"/>
+
+                                        <DataTrigger Binding="{Binding EstadoGeneral}"
+                                                     Value="{x:Static models:EstadoProceso.Detenido}">
+
+                                            <Setter TargetName="StatusBadge"
+                                                    Property="Background"
+                                                    Value="#E74C3C"/>
+
+                                            <Setter TargetName="CardBorder"
+                                                    Property="BorderBrush"
+                                                    Value="#E74C3C"/>
+
                                         </DataTrigger>
+
                                     </DataTemplate.Triggers>
+
                                 </DataTemplate>
+
                             </ItemsControl.ItemTemplate>
+
                         </ItemsControl>
+
                     </StackPanel>
+
                 </ScrollViewer>
+
             </TabItem>
+
             <!-- Pestaña 2: Configuración -->
-            <TabItem Header=" Configuración">
+            <TabItem Header="Configuración">
+
                 <StackPanel Margin="20">
-                    <TextBlock Text="Opciones del Servicio WMI" FontSize="16" FontWeight="Bold"/>
+
+                    <TextBlock Text="Opciones del Servicio WMI"
+                               FontSize="16"
+                               FontWeight="Bold"/>
+
                     <TextBlock Text="Aquí puedes agregar campos para modificar el tiempo de polling o la lista de procesos."
-                               Margin="0,10,0,0" Foreground="Gray"/>
+                               Margin="0,10,0,0"
+                               Foreground="Gray"/>
+
                 </StackPanel>
+
             </TabItem>
+
         </TabControl>
+
     </Grid>
+
 </Window>

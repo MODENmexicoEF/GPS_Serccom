@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Models;
 using MahApps.Metro.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -9,12 +10,24 @@ namespace MahApps.Metro.ViewModels
     public class MainViewModel : ObservableObject
     {
         private readonly WmiService _wmiService;
+        private readonly EmailService _emailService;
 
         // Colección única fija para los procesos principales configurados
         public ObservableCollection<ProcesoAgrupado> ProcesosPadre { get; } = new();
 
         public MainViewModel()
         {
+            var settings = EmailSettings.Load();
+
+            var dbOptions = new DbContextOptionsBuilder<EmailDbContext>()
+                .UseSqlServer(
+                    @"Server=(localdb)\MSSQLLocalDB;
+              Database=GpsSerccomEmail;
+              Trusted_Connection=True;
+              TrustServerCertificate=True;")
+                .Options;
+
+            _emailService = new EmailService(settings, dbOptions);
             string[] procesosObjetivo = { "Spotify.exe", "Chrome.exe" };
 
             // Inicializamos la UI con los procesos base configurados (evita lista infinita)
@@ -75,6 +88,20 @@ namespace MahApps.Metro.ViewModels
                     padre.CantidadActivos = padre.SubProcesos.Count;
                 }
             });
+        }
+        private async Task EnviarAlertaAsync(ProcesoInfo info)
+        {
+            try
+            {
+                await _emailService.SendProcessAlertAsync(
+                    info.Nombre,
+                    info.ProcessId);
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes registrar el error en tu sistema de logs.
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
         }
 
         public void LimpiarServicios()
