@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "95DUUw6VcAk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\yee_j\\source\\repos\\MahApps.Metro\\MahApps.Metro\\MahApps.Metro.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yee_j\\.nuget\\packages\\system.management\\10.0.12\\system.management.10.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
