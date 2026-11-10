@@ -105,26 +105,21 @@
                                    Margin="0,0,0,15"/>
 
                         <!-- Procesos padre -->
+                        <!-- Procesos padre -->
                         <ItemsControl ItemsSource="{Binding ProcesosPadre}">
-
                             <ItemsControl.ItemTemplate>
-
                                 <DataTemplate>
-
                                     <Border x:Name="CardBorder"
-                                            Background="White"
-                                            CornerRadius="8"
-                                            Margin="0,0,0,10"
-                                            Padding="12"
-                                            BorderBrush="#E0E0E0"
-                                            BorderThickness="1.5">
+                    Background="White"
+                    CornerRadius="8"
+                    Margin="0,0,0,10"
+                    Padding="12"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1.5">
 
                                         <Expander x:Name="ProcessExpander">
-
                                             <Expander.Header>
-
                                                 <Grid Width="730">
-
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="110"/>
                                                         <ColumnDefinition Width="*"/>
@@ -133,176 +128,127 @@
 
                                                     <!-- Estado del proceso padre -->
                                                     <Border x:Name="StatusBadge"
-                                                            CornerRadius="12"
-                                                            Padding="8,4"
-                                                            HorizontalAlignment="Left">
-
+                                    CornerRadius="12"
+                                    Padding="8,4"
+                                    HorizontalAlignment="Left">
                                                         <TextBlock Text="{Binding EstadoGeneral}"
-                                                                   Foreground="White"
-                                                                   FontWeight="Bold"
-                                                                   FontSize="11"
-                                                                   HorizontalAlignment="Center"/>
-
+                                           Foreground="White"
+                                           FontWeight="Bold"
+                                           FontSize="11"
+                                           HorizontalAlignment="Center"/>
                                                     </Border>
 
                                                     <!-- Nombre y contador -->
                                                     <StackPanel Grid.Column="1"
-                                                                Orientation="Horizontal"
-                                                                VerticalAlignment="Center"
-                                                                Margin="15,0,0,0">
-
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Center"
+                                        Margin="15,0,0,0">
                                                         <TextBlock Text="{Binding Nombre}"
-                                                                   FontWeight="Bold"
-                                                                   FontSize="14"
-                                                                   Foreground="#2C3E50"/>
-
+                                           FontWeight="Bold"
+                                           FontSize="14"
+                                           Foreground="#2C3E50"/>
                                                         <TextBlock Text=" (Activos: "
-                                                                   Foreground="Gray"
-                                                                   FontSize="12"
-                                                                   VerticalAlignment="Center"
-                                                                   Margin="10,0,0,0"/>
-
+                                           Foreground="Gray"
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Margin="10,0,0,0"/>
                                                         <TextBlock Text="{Binding CantidadActivos}"
-                                                                   Foreground="Gray"
-                                                                   FontSize="12"
-                                                                   VerticalAlignment="Center"
-                                                                   FontWeight="Bold"/>
-
+                                           Foreground="Gray"
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"/>
                                                         <TextBlock Text=")"
-                                                                   Foreground="Gray"
-                                                                   FontSize="12"
-                                                                   VerticalAlignment="Center"/>
-
+                                           Foreground="Gray"
+                                           FontSize="12"
+                                           VerticalAlignment="Center"/>
                                                     </StackPanel>
 
+                                                    <!-- INTERRUPTOR DE CORREO PARA EL PROCESO PADRE -->
+                                                    <CheckBox Grid.Column="2"
+                                      Content="Correo"
+                                      Style="{StaticResource AndroidSwitch}"
+                                      IsChecked="{Binding NotificacionesHabilitadas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      VerticalAlignment="Center"
+                                      ToolTip="Activa o desactiva las notificaciones por correo para este proceso padre."/>
                                                 </Grid>
-
                                             </Expander.Header>
 
-                                            <!-- Instancias y subprocesos -->
+                                            <!-- Instancias y subprocesos (SIN INTERRUPTOR) -->
                                             <StackPanel Margin="0,15,0,5">
-
-                                                <Separator Background="#E0E0E0"
-                                                           Margin="0,0,0,10"/>
-
+                                                <Separator Background="#E0E0E0" Margin="0,0,0,10"/>
                                                 <TextBlock Text="Instancias y Subprocesos Activos:"
-                                                           FontSize="12"
-                                                           FontWeight="SemiBold"
-                                                           Foreground="#555"
-                                                           Margin="0,0,0,5"/>
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Foreground="#555"
+                                   Margin="0,0,0,5"/>
 
                                                 <ItemsControl ItemsSource="{Binding SubProcesos}">
-
                                                     <ItemsControl.ItemTemplate>
-
                                                         <DataTemplate>
-
                                                             <Border Background="#F9F9FB"
-                                                                    CornerRadius="6"
-                                                                    Padding="8"
-                                                                    Margin="0,0,0,5"
-                                                                    BorderBrush="#EFEFEF"
-                                                                    BorderThickness="1">
-
+                                            CornerRadius="6"
+                                            Padding="8"
+                                            Margin="0,0,0,5"
+                                            BorderBrush="#EFEFEF"
+                                            BorderThickness="1">
                                                                 <Grid>
-
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="80"/>
                                                                         <ColumnDefinition Width="80"/>
                                                                         <ColumnDefinition Width="80"/>
                                                                         <ColumnDefinition Width="*"/>
-                                                                        <ColumnDefinition Width="Auto"/>
                                                                     </Grid.ColumnDefinitions>
 
                                                                     <!-- Hora -->
                                                                     <TextBlock Text="{Binding HoraEvento, StringFormat={}{0:HH:mm:ss}}"
-                                                                               Foreground="Gray"
-                                                                               FontSize="11"
-                                                                               VerticalAlignment="Center"/>
+                                                       Foreground="Gray"
+                                                       FontSize="11"
+                                                       VerticalAlignment="Center"/>
 
                                                                     <!-- PID -->
                                                                     <TextBlock Grid.Column="1"
-                                                                               Text="{Binding ProcessId}"
-                                                                               FontWeight="SemiBold"
-                                                                               FontSize="11"
-                                                                               VerticalAlignment="Center"/>
+                                                       Text="{Binding ProcessId}"
+                                                       FontWeight="SemiBold"
+                                                       FontSize="11"
+                                                       VerticalAlignment="Center"/>
 
                                                                     <!-- Parent PID -->
                                                                     <TextBlock Grid.Column="2"
-                                                                               Text="{Binding ParentId}"
-                                                                               Foreground="Gray"
-                                                                               FontSize="11"
-                                                                               VerticalAlignment="Center"/>
+                                                       Text="{Binding ParentId}"
+                                                       Foreground="Gray"
+                                                       FontSize="11"
+                                                       VerticalAlignment="Center"/>
 
                                                                     <!-- Tipo -->
                                                                     <TextBlock Grid.Column="3"
-                                                                               Text="{Binding TipoProceso}"
-                                                                               FontSize="11"
-                                                                               Foreground="#333"
-                                                                               VerticalAlignment="Center"
-                                                                               TextTrimming="CharacterEllipsis"/>
-
-                                                                    <!-- Interruptor de notificaciones -->
-                                                                    <CheckBox Grid.Column="4"
-                                                                              Content="Correo"
-                                                                              Style="{StaticResource AndroidSwitch}"
-                                                                              IsChecked="{Binding NotificacionesHabilitadas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                              Margin="10,0,0,0"
-                                                                              ToolTip="Activa o desactiva las notificaciones por correo para esta instancia."/>
-
+                                                       Text="{Binding TipoProceso}"
+                                                       FontSize="11"
+                                                       Foreground="#333"
+                                                       VerticalAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis"/>
                                                                 </Grid>
-
                                                             </Border>
-
                                                         </DataTemplate>
-
                                                     </ItemsControl.ItemTemplate>
-
                                                 </ItemsControl>
-
                                             </StackPanel>
-
                                         </Expander>
-
                                     </Border>
 
-                                    <!-- Colores según el estado -->
+                                    <!-- Triggers de colores del padre -->
                                     <DataTemplate.Triggers>
-
-                                        <DataTrigger Binding="{Binding EstadoGeneral}"
-                                                     Value="{x:Static models:EstadoProceso.Iniciado}">
-
-                                            <Setter TargetName="StatusBadge"
-                                                    Property="Background"
-                                                    Value="#2ECC71"/>
-
-                                            <Setter TargetName="CardBorder"
-                                                    Property="BorderBrush"
-                                                    Value="#2ECC71"/>
-
+                                        <DataTrigger Binding="{Binding EstadoGeneral}" Value="{x:Static models:EstadoProceso.Iniciado}">
+                                            <Setter TargetName="StatusBadge" Property="Background" Value="#2ECC71"/>
+                                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#2ECC71"/>
                                         </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding EstadoGeneral}"
-                                                     Value="{x:Static models:EstadoProceso.Detenido}">
-
-                                            <Setter TargetName="StatusBadge"
-                                                    Property="Background"
-                                                    Value="#E74C3C"/>
-
-                                            <Setter TargetName="CardBorder"
-                                                    Property="BorderBrush"
-                                                    Value="#E74C3C"/>
-
+                                        <DataTrigger Binding="{Binding EstadoGeneral}" Value="{x:Static models:EstadoProceso.Detenido}">
+                                            <Setter TargetName="StatusBadge" Property="Background" Value="#E74C3C"/>
+                                            <Setter TargetName="CardBorder" Property="BorderBrush" Value="#E74C3C"/>
                                         </DataTrigger>
-
                                     </DataTemplate.Triggers>
-
                                 </DataTemplate>
-
                             </ItemsControl.ItemTemplate>
-
                         </ItemsControl>
-
                     </StackPanel>
 
                 </ScrollViewer>
@@ -310,22 +256,104 @@
             </TabItem>
 
             <!-- Pestaña 2: Configuración -->
-            <TabItem Header="Configuración">
+            <!-- Pestaña 2: Configuración -->
+            <TabItem Header="Configuración de Correos">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <StackPanel Margin="20">
+                    <TextBlock Text="Gestión de Destinatarios de Alertas"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Foreground="#333"/>
 
-                    <TextBlock Text="Opciones del Servicio WMI"
-                               FontSize="16"
-                               FontWeight="Bold"/>
+                    <!-- Formulario para agregar nuevo correo -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,15,0,15">
+                        <TextBox Width="300"
+                     Height="30"
+                     Text="{Binding NuevoCorreoInput, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
+                     Padding="5,0"/>
+                        <Button Content="Agregar Destinatario"
+                    Margin="10,0,0,0"
+                    Width="140"
+                    Height="30"
+                    Command="{Binding AgregarCorreoCommand}"
+                    Background="#2C3E50"
+                    Foreground="White"/>
+                    </StackPanel>
 
-                    <TextBlock Text="Aquí puedes agregar campos para modificar el tiempo de polling o la lista de procesos."
-                               Margin="0,10,0,0"
-                               Foreground="Gray"/>
+                    <!-- Lista de destinatarios guardados en la DB -->
+                    <Border Grid.Row="2"
+                Background="White"
+                CornerRadius="8"
+                Padding="10"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1">
+                        <ListView ItemsSource="{Binding Destinatarios}"
+                      BorderThickness="0"
+                      Background="Transparent">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
 
-                </StackPanel>
+                                    <!-- Columna de Correo Electrónico con cambio de color condicional a Rojo si IsActive es false -->
+                                    <GridViewColumn Header="Correo Electrónico" Width="300">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Email}" VerticalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="#333333"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                                                    <Setter Property="Foreground" Value="#E74C3C"/>
+                                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
 
+                                    <!-- Checkbox Activo/Inactivo interactivo -->
+                                    <GridViewColumn Header="Activo" Width="80">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Command="{Binding DataContext.CambiarEstadoCorreoCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                              CommandParameter="{Binding}"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <!-- Botón Eliminar -->
+                                    <GridViewColumn Header="Acciones" Width="100">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Eliminar"
+                                            Command="{Binding DataContext.EliminarCorreoCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            CommandParameter="{Binding}"
+                                            Background="#E74C3C"
+                                            Foreground="White"
+                                            Width="80"
+                                            Height="24"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Border>
+                </Grid>
             </TabItem>
-
         </TabControl>
 
     </Grid>

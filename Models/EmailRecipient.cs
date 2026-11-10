@@ -1,10 +1,25 @@
-﻿namespace MahApps.Metro.Models;
+﻿using MahApps.Metro.ViewModels;
 
-public class EmailRecipient
+namespace MahApps.Metro.Models
 {
-    public int Id { get; set; }
+    public class EmailRecipient : ObservableObject
+    {
+        public int Id { get; set; }
 
-    public string Email { get; set; } = "";
+        public string Email { get; set; } = "";
 
-    public bool IsActive { get; set; } = true;
+        private bool _isActive = true;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+    }
 }

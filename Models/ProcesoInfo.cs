@@ -58,6 +58,14 @@ namespace MahApps.Metro.Models
             set { _cantidadActivos = value; OnPropertyChanged(); }
         }
 
+        // NUEVO: Propiedad para activar/desactivar notificaciones del proceso padre
+        private bool _notificacionesHabilitadas = true;
+        public bool NotificacionesHabilitadas
+        {
+            get => _notificacionesHabilitadas;
+            set { _notificacionesHabilitadas = value; OnPropertyChanged(); }
+        }
+
         // Colección de los subprocesos/instancias de este padre específico
         public ObservableCollection<SubProcesoItem> SubProcesos { get; } = new();
     }
