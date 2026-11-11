@@ -18,7 +18,7 @@
 
     <!-- Recursos visuales -->
     <Window.Resources>
-
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <!-- Interruptor estilo Android -->
         <Style x:Key="AndroidSwitch"
                TargetType="{x:Type CheckBox}">
@@ -351,6 +351,186 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <!-- Pestaña 3: Monitor y Visor de Facturas PDF -->
+            <TabItem Header="Visor de Facturas">
+                <Grid Margin="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="240" MinWidth="200"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="*" MinWidth="350"/>
+                        <ColumnDefinition Width="350"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Columna 1: Lista de facturas -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="8" Padding="10" BorderBrush="#E0E0E0" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Facturas Disponibles" FontSize="14" FontWeight="Bold" Foreground="#333" Margin="0,0,0,10"/>
+                            <ListBox Grid.Row="1" ItemsSource="{Binding ListaFacturas}"
+                         SelectedItem="{Binding FacturaSeleccionada, Mode=TwoWay}"
+                         Background="Transparent" BorderThickness="0">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="{Binding NombreArchivo}" FontWeight="SemiBold" Foreground="#2C3E50" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding FechaCreacion, StringFormat={}{0:dd/MM/yyyy HH:mm}}" FontSize="11" Foreground="Gray"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </Border>
+
+                    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" Background="Transparent"/>
+
+                    <!-- Columna 2: Vista previa con barra de herramientas -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="8" Padding="10" BorderBrush="#E0E0E0" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Barra: páginas y zoom -->
+                            <Border Background="#F9F9FB" CornerRadius="6" Padding="8" BorderBrush="#EFEFEF" BorderThickness="1" Margin="0,0,0,10">
+                                <DockPanel LastChildFill="False">
+                                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                                        <Button Content="◀" Width="30" Height="26" Command="{Binding PaginaAnteriorCommand}"/>
+                                        <TextBox Text="{Binding PaginaActual, UpdateSourceTrigger=LostFocus}"
+                                     Width="40" Height="26" Margin="6,0"
+                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <TextBlock Text="{Binding TotalPaginas, StringFormat='de {0}'}" VerticalAlignment="Center" Foreground="#555" Margin="0,0,6,0"/>
+                                        <Button Content="▶" Width="30" Height="26" Command="{Binding PaginaSiguienteCommand}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" VerticalAlignment="Center">
+                                        <Button Content="−" Width="30" Height="26" Command="{Binding ZoomMenosCommand}"/>
+                                        <Slider Minimum="25" Maximum="300" Width="130" Margin="8,0"
+                                    Value="{Binding ZoomPct, Mode=TwoWay}" VerticalAlignment="Center"/>
+                                        <Button Content="+" Width="30" Height="26" Command="{Binding ZoomMasCommand}"/>
+                                        <Button Content="{Binding ZoomPct, StringFormat={}{0:0}%}" Width="56" Height="26" Margin="6,0,0,0"
+                                    Command="{Binding ZoomRestablecerCommand}" ToolTip="Restablecer a 100%"/>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+
+                            <!-- Visor -->
+                            <ScrollViewer Grid.Row="1" Background="#E5E7EB"
+                              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <Border HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20" Background="White">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.3"/>
+                                    </Border.Effect>
+                                    <Image Source="{Binding VistaPrevia}"
+                               Width="{Binding PreviewAncho}" Height="{Binding PreviewAlto}"
+                               Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                </Border>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+
+                    <!-- Columna 3: Panel de impresión -->
+                    <Border Grid.Column="3" Background="White" CornerRadius="8" Padding="12" Margin="10,0,0,0" BorderBrush="#E0E0E0" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Imprimir" FontSize="16" FontWeight="Bold" Foreground="#333" Margin="0,0,0,10"/>
+
+                            <!-- Impresoras (cada una con su configuración) -->
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding Impresoras}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Background="#F9F9FB" CornerRadius="6" Padding="10" Margin="0,0,0,8"
+                                        BorderBrush="#EFEFEF" BorderThickness="1">
+                                                <StackPanel>
+                                                    <CheckBox IsChecked="{Binding EstaSeleccionada, Mode=TwoWay}"
+                                                  FontWeight="SemiBold" Foreground="#2C3E50">
+                                                        <TextBlock Text="{Binding Nombre}" TextTrimming="CharacterEllipsis" MaxWidth="270"/>
+                                                    </CheckBox>
+
+                                                    <!-- Ajustes: solo si la impresora está marcada -->
+                                                    <Grid Margin="0,10,0,0"
+                                              Visibility="{Binding EstaSeleccionada, Converter={StaticResource BoolToVis}}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <TextBlock Text="Copias:" VerticalAlignment="Center" Margin="0,0,10,6" FontSize="12" Foreground="#555"/>
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,6">
+                                                            <TextBox Text="{Binding Copias, UpdateSourceTrigger=LostFocus}" Width="50" Height="26"
+                                                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <CheckBox Content="Intercalar" IsChecked="{Binding Intercalar}" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                                                        </StackPanel>
+
+                                                        <TextBlock Grid.Row="1" Text="Páginas:" VerticalAlignment="Center" Margin="0,0,10,6" FontSize="12" Foreground="#555"/>
+                                                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,6">
+                                                            <ComboBox SelectedIndex="{Binding ModoIndex}" Height="26">
+                                                                <ComboBoxItem Content="Todas"/>
+                                                                <ComboBoxItem Content="Página actual"/>
+                                                                <ComboBoxItem Content="Rango..."/>
+                                                            </ComboBox>
+                                                            <TextBox Text="{Binding RangoTexto, UpdateSourceTrigger=PropertyChanged}" Height="26" Margin="0,4,0,0"
+                                                         VerticalContentAlignment="Center" ToolTip="Ejemplo: 1,3,5-7"
+                                                         Visibility="{Binding MostrarRango, Converter={StaticResource BoolToVis}}"/>
+                                                        </StackPanel>
+
+                                                        <TextBlock Grid.Row="2" Text="Papel:" VerticalAlignment="Center" Margin="0,0,10,6" FontSize="12" Foreground="#555"/>
+                                                        <ComboBox Grid.Row="2" Grid.Column="1" Height="26" Margin="0,0,0,6"
+                                                      ItemsSource="{Binding TamanosPapel}" SelectedItem="{Binding PapelSeleccionado}"/>
+
+                                                        <TextBlock Grid.Row="3" Text="Color:" VerticalAlignment="Center" Margin="0,0,10,6" FontSize="12" Foreground="#555"/>
+                                                        <CheckBox Grid.Row="3" Grid.Column="1" Content="Imprimir a color" Margin="0,0,0,6"
+                                                      IsChecked="{Binding Color}" IsEnabled="{Binding SoportaColor}"/>
+
+                                                        <TextBlock Grid.Row="4" Text="Dúplex:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12" Foreground="#555"/>
+                                                        <ComboBox Grid.Row="4" Grid.Column="1" Height="26"
+                                                      SelectedIndex="{Binding DuplexIndex}" IsEnabled="{Binding PuedeDuplex}">
+                                                            <ComboBoxItem Content="Una sola cara"/>
+                                                            <ComboBoxItem Content="Ambas caras (borde largo)"/>
+                                                            <ComboBoxItem Content="Ambas caras (borde corto)"/>
+                                                        </ComboBox>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+
+                            <!-- Opciones globales y botón -->
+                            <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                                <TextBlock Text="Escala de impresión (todas las impresoras):" FontWeight="SemiBold" FontSize="12" Foreground="#555" Margin="0,0,0,5"/>
+                                <ComboBox ItemsSource="{Binding ModosEscala}" SelectedIndex="{Binding ModoEscalaIndex}" Height="28" Margin="0,0,0,12"/>
+
+                                <Button Content="Imprimir" Command="{Binding ImprimirFacturaCommand}"
+                            IsEnabled="{Binding PuedeImprimir}"
+                            Background="#2ECC71" Foreground="White" Height="38" FontWeight="Bold" FontSize="14"/>
+
+                                <ProgressBar IsIndeterminate="True" Height="4" Margin="0,8,0,0"
+                                 Visibility="{Binding Imprimiendo, Converter={StaticResource BoolToVis}}"/>
+                                <TextBlock Text="{Binding EstadoImpresion}" Foreground="Gray" FontSize="11" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
                     </Border>
                 </Grid>
             </TabItem>

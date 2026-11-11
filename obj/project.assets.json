@@ -1072,6 +1072,30 @@
           }
         }
       },
+      "PdfiumViewer/2.13.0": {
+        "type": "package",
+        "compile": {
+          "lib/net20/PdfiumViewer.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net20/PdfiumViewer.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net20/nl/PdfiumViewer.resources.dll": {
+            "locale": "nl"
+          }
+        }
+      },
+      "PdfiumViewer.Native.x86_64.v8-xfa/2018.4.8.256": {
+        "type": "package",
+        "build": {
+          "Build/PdfiumViewer.Native.x86_64.v8-xfa.props": {}
+        }
+      },
       "System.ClientModel/1.8.0": {
         "type": "package",
         "dependencies": {
@@ -3384,6 +3408,35 @@
         "packageIcon.png"
       ]
     },
+    "PdfiumViewer/2.13.0": {
+      "sha512": "Nw4owBmJzDVXoMRjCnqPbET07CPOawwhcNjt+PyRaSxONN9bsFF+cm9kcMsDLEAEaxsiDJo5jls8bCQjvjidkA==",
+      "type": "package",
+      "path": "pdfiumviewer/2.13.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Tools/Install.ps1",
+        "lib/net20/PdfiumViewer.dll",
+        "lib/net20/PdfiumViewer.xml",
+        "lib/net20/nl/PdfiumViewer.resources.dll",
+        "pdfiumviewer.2.13.0.nupkg.sha512",
+        "pdfiumviewer.nuspec"
+      ]
+    },
+    "PdfiumViewer.Native.x86_64.v8-xfa/2018.4.8.256": {
+      "sha512": "0RQwmLMPKOHBRqRK+NPMR2H5EQ4KlYO+LnT3Y2lByVUa5/JTPCMswL46JEXX+/MAfJtCpS2PzJvy6QzpH2nuIw==",
+      "type": "package",
+      "path": "pdfiumviewer.native.x86_64.v8-xfa/2018.4.8.256",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Build/PdfiumViewer.Native.x86_64.v8-xfa.props",
+        "Build/x64/pdfium.dll",
+        "pdfiumviewer.native.x86_64.v8-xfa.2018.4.8.256.nupkg.sha512",
+        "pdfiumviewer.native.x86_64.v8-xfa.nuspec"
+      ]
+    },
     "System.ClientModel/1.8.0": {
       "sha512": "AqRzhn0v29GGGLj/Z6gKq4lGNtvPHT4nHdG5PDJh9IfVjv/nYUVmX11hwwws1vDFeIAzrvmn0dPu8IjLtu6fAw==",
       "type": "package",
@@ -3661,6 +3714,8 @@
       "Microsoft.EntityFrameworkCore.Design >= 10.0.14",
       "Microsoft.EntityFrameworkCore.SqlServer >= 10.0.14",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.14",
+      "PdfiumViewer >= 2.13.0",
+      "PdfiumViewer.Native.x86_64.v8-xfa >= 2018.4.8.256",
       "System.Management >= 10.0.12"
     ]
   },
@@ -3740,6 +3795,14 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[10.0.14, )"
+          },
+          "PdfiumViewer": {
+            "target": "Package",
+            "version": "[2.13.0, )"
+          },
+          "PdfiumViewer.Native.x86_64.v8-xfa": {
+            "target": "Package",
+            "version": "[2018.4.8.256, )"
           },
           "System.Management": {
             "target": "Package",
@@ -4058,5 +4121,17 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PdfiumViewer 2.13.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net10.0-windows7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PdfiumViewer",
+      "targetGraphs": [
+        "net10.0-windows"
+      ]
+    }
+  ]
 }

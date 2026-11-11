@@ -5,6 +5,9 @@
     <Compile Update="Views\HistoricalView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PrintDialogWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ProcesosView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

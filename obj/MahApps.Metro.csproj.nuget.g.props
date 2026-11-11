@@ -14,11 +14,13 @@
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)pdfiumviewer.native.x86_64.v8-xfa\2018.4.8.256\Build\PdfiumViewer.Native.x86_64.v8-xfa.props" Condition="Exists('$(NuGetPackageRoot)pdfiumviewer.native.x86_64.v8-xfa\2018.4.8.256\Build\PdfiumViewer.Native.x86_64.v8-xfa.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\10.0.14\buildTransitive\net10.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\10.0.14\buildTransitive\net10.0\Microsoft.EntityFrameworkCore.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.11.0\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.11.0\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design\10.0.14\build\net10.0\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design\10.0.14\build\net10.0\Microsoft.EntityFrameworkCore.Design.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgPdfiumViewer Condition=" '$(PkgPdfiumViewer)' == '' ">C:\Users\yee_j\.nuget\packages\pdfiumviewer\2.13.0</PkgPdfiumViewer>
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\yee_j\.nuget\packages\microsoft.codeanalysis.analyzers\3.11.0</PkgMicrosoft_CodeAnalysis_Analyzers>
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\yee_j\.nuget\packages\microsoft.entityframeworkcore.tools\10.0.14</PkgMicrosoft_EntityFrameworkCore_Tools>
   </PropertyGroup>

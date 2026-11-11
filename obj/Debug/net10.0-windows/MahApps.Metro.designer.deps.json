@@ -812,6 +812,19 @@
           }
         }
       },
+      "PdfiumViewer/2.13.0": {
+        "runtime": {
+          "lib/net20/PdfiumViewer.dll": {
+            "assemblyVersion": "2.13.0.0",
+            "fileVersion": "2.13.0.0"
+          }
+        },
+        "resources": {
+          "lib/net20/nl/PdfiumViewer.resources.dll": {
+            "locale": "nl"
+          }
+        }
+      },
       "System.ClientModel/1.8.0": {
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "10.0.14",
@@ -1237,6 +1250,13 @@
       "sha512": "sha512-pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
       "path": "newtonsoft.json/13.0.4",
       "hashPath": "newtonsoft.json.13.0.4.nupkg.sha512"
+    },
+    "PdfiumViewer/2.13.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Nw4owBmJzDVXoMRjCnqPbET07CPOawwhcNjt+PyRaSxONN9bsFF+cm9kcMsDLEAEaxsiDJo5jls8bCQjvjidkA==",
+      "path": "pdfiumviewer/2.13.0",
+      "hashPath": "pdfiumviewer.2.13.0.nupkg.sha512"
     },
     "System.ClientModel/1.8.0": {
       "type": "package",
