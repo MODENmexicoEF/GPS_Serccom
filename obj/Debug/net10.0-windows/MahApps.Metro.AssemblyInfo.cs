@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MahApps.Metro")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0af9c851a600c3d4881975588ee88210bc26a00e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0c6d499292821371ee1408c25982d1afe8cc10e")]
 [assembly: System.Reflection.AssemblyProductAttribute("MahApps.Metro")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MahApps.Metro")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
